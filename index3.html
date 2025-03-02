@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mapbox + Google Spreadsheet CSV</title>
+  <!-- Mapbox GL JS -->
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet">
+  <!-- PapaParse: CSV パースライブラリ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+  <style>
+    body { margin: 0; padding: 0; }
+    #map { width: 100vw; height: 100vh; }
+    /* 中央ポップアップオーバーレイ */
+    #centerPopupOverlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.6);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+    #centerPopup {
+      background: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      max-width: 600px;
+      width: 90%;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      position: relative;
+    }
+    #closePopup {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      border: none;
+      background: transparent;
+      font-size: 24px;
+      cursor: pointer;
+    }
+    #centerPopup img {
+      width: 100%;
+      max-width: 600px;
+      max-height: 400px;       /* 高さの上限を400pxに設定 */
+      object-fit: contain;     /* 画像の縦横比を保ちながら収める */
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+    /* モバイル用 */
+    @media (max-width: 768px) {
+      #centerPopup {
+        width: 90%;
+        padding: 15px;
+      }
+      #centerPopup h3 {
+        font-size: 20px;
+      }
+      #centerPopup p {
+        font-size: 16px;
+      }
+    }
+    /* マーカー用カスタムアイコン（黒縁の赤丸） */
+    .custom-marker {
+        background-color: red;      /* 赤色 */
+        border: 2px solid black;    /* 黒の境界線 */
+        border-radius: 50%;         /* 丸くする */
+        width: 10px;
+        height: 10px;
+        cursor: pointer;
+    }
+  
+  </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<!-- 中央ポップアップオーバーレイ -->
+<div id="centerPopupOverlay">
+  <div id="centerPopup">
+    <button id="closePopup">&times;</button>
+    <div id="popupContent"></div>
+  </div>
+</div>
+
+<script>
+  // Mapbox のアクセストークンを設定
+  mapboxgl.accessToken = 'pk.eyJ1Ijoibm5wZGF0YSIsImEiOiJjbHBnbTV6cXIwd2p2MmlwYWxnYWg1bnh3In0.vDZxaboMvN72PFLaztqqnA';
+
+  // 地図の初期設定
+  const map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/nnpdata/cm7ok5z5k002a01sk8ple0w9t',
+      center: [130.05, 33.18],
+      zoom: 10
+  });
+  
+  // ナビゲーションとフルスクリーンコントロールを追加
+  map.addControl(new mapboxgl.NavigationControl());
+  map.addControl(new mapboxgl.FullscreenControl());
+
+  // 中央ポップアップの表示/非表示を制御する関数
+  function openCenterPopup(contentHTML) {
+    document.getElementById('popupContent').innerHTML = contentHTML;
+    document.getElementById('centerPopupOverlay').style.display = 'flex';
+  }
+  function closeCenterPopup() {
+    document.getElementById('centerPopupOverlay').style.display = 'none';
+  }
+  document.getElementById('closePopup').addEventListener('click', closeCenterPopup);
+
+  // Google スプレッドシートの CSV URL（公開設定済みの URL に置き換えてください）
+  const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTZTPZ6TLFNzoF_rn7gexlPtXWU2AnaqV1s3h2PF0SkKjpscjnE57z1X7dbKyFNICTZ10QAXYK1tNhM/pub?output=csv';
+
+  // CSV データを取得してパース
+  Papa.parse(csvUrl, {
+    download: true,
+    header: true,
+    complete: function(results) {
+      console.log("CSV Data:", results.data);
+      results.data.forEach(function(row) {
+        // CSV のカラム名は「経度」「緯度」「タイトル」「説明」「画像」と仮定
+        const lng = parseFloat(row["経度"]);
+        const lat = parseFloat(row["緯度"]);
+        if (!lng || !lat) return; // 座標が無い行はスキップ
+
+        const title = row["引用元"] || "No Title";
+        const description = row["絵解き文"] || "No Description";
+        const image = row["元写真"] || "";
+
+        // カスタムマーカーを作成
+        const el = document.createElement('div');
+        el.className = 'custom-marker';
+
+        // マーカーを地図に追加し、クリックで中央ポップアップを表示
+        new mapboxgl.Marker(el)
+          .setLngLat([lng, lat])
+          .addTo(map)
+          .getElement().addEventListener('click', function(e) {
+              const contentHTML = `
+                <h3 style="margin-bottom: 10px; font-size: 22px;">${title}</h3>
+                <p style="margin-bottom: 10px; font-size: 18px;">${description}</p>
+                <img src="${image}" alt="Image">
+              `;
+              openCenterPopup(contentHTML);
+          });
+      });
+    }
+  });
+</script>
+
+</body>
+</html>

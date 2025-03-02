@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="交通事故マップの説明文">
+  <meta property="og:title" content="交通事故マップ">
+  <meta property="og:site_name" content="交通事故マップ">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ja-JP">
+  <meta property="og:image" content="https://specials.nishinippon.co.jp/school_rules/img/ogp.png">
+  <meta property="og:description" content="交通事故マップの説明文">
+  <title>交通事故マップ</title>
+  
+  <!-- Mapbox GL JS (バージョンは必要に応じて統一) -->
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
+  
+  <!-- Mapbox Search JS -->
+  <script id="search-js" defer src="https://api.mapbox.com/search-js/v1.0.0-beta.22/web.js"></script>
+  
+  <!-- PapaParse: CSV パースライブラリ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+  
+  <style>
+    /* 全体の設定 */
+    body {
+      margin: 0;
+      font-family: "Noto Sans JP", Arial, sans-serif;
+      overflow: hidden;
+    }
+    .container {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* ヘッダー */
+    .header {
+      flex-shrink: 0;
+      height: 15%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0 20px;
+      box-sizing: border-box;
+      background: #f5f5f5;
+      position: relative;
+    }
+    .logo-and-title {
+      display: flex;
+      align-items: center;
+      text-align: center;
+    }
+    .logo img {
+      max-height: 40px;
+    }
+    .header h2 {
+      font-size: 1.5rem;
+      margin-left: 10px;
+      white-space: nowrap;
+    }
+    .menu-button {
+      background-color: #fff;
+      color: #f00;
+      border: 2px solid #f00;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-size: 1.5rem;
+      font-weight: bold;
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .menu-button:hover {
+      background-color: #fdd;
+    }
+    
+    /* インフォパネル（ハンバーガーメニュー） */
+    .info {
+      width: 50%;
+      height: 100%;
+      background: #fff;
+      position: fixed;
+      top: 0;
+      right: -50%;
+      z-index: 10;
+      transition: right 0.3s ease;
+      box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+    }
+    .info.open {
+      right: 0;
+    }
+    .close-button {
+      background-color: #fff;
+      color: #f00;
+      border: 2px solid #f00;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      font-weight: bold;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+    .info-content {
+      flex-grow: 1;
+      overflow-y: auto;
+      padding: 60px 20px 20px 20px;
+      font-size: 1rem;
+      line-height: 1.5;
+      margin: 0;
+    }
+    .sns-icons {
+      display: flex;
+      gap: 20px;
+    }
+    .sns-icons a img {
+      width: 36px;
+      height: 36px;
+    }
+    
+    /* マップ部分 */
+    .map {
+      flex-grow: 1;
+      width: 100%;
+      height: calc(100% - 15%); /* ヘッダー分を除く */
+    }
+    
+    /* 中央ポップアップオーバーレイ（CSVマーカー用） */
+    #centerPopupOverlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.6);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+    #centerPopup {
+      background: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      max-width: 600px;
+      width: 90%;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      position: relative;
+    }
+    #closePopup {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      border: none;
+      background: transparent;
+      font-size: 24px;
+      cursor: pointer;
+    }
+    #centerPopup img {
+      width: 100%;
+      max-width: 600px;
+      max-height: 400px;
+      object-fit: contain;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+    
+    /* マーカー用カスタムアイコン：黒縁の赤丸 */
+    .custom-marker {
+      background-color: red;
+      border: 2px solid black;
+      border-radius: 50%;
+      width: 10px;
+      height: 10px;
+      cursor: pointer;
+    }
+    
+    /* メディアクエリ（スマホ用） */
+    @media screen and (max-width: 768px) {
+      .header { padding: 0 15px; }
+      .logo-and-title {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+        width: 100%;
+    }
+      .logo img { max-height: 25px; margin-top: 15px; margin-bottom: 5px; }
+      .header h2 { font-size: 1.2rem; margin-left: 0; margin-top: 5px; line-height: 1.3; white-space: normal; }
+      .info { width: 80%; right: -80%; }
+      .map { height: calc(100% - 15%); }
+      #centerPopup { width: 90%; padding: 15px; }
+      #centerPopup h3 { font-size: 20px; }
+      #centerPopup p { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- ヘッダー -->
+    <div class="header">
+      <div class="logo-and-title">
+        <div class="logo">
+          <a href="https://www.nishinippon.co.jp/" target="_blank">
+            <img src="img/logo.png" alt="ロゴ画像">
+          </a>
+        </div>
+        <h2>2005年<span class="sp-only"><br></span>福岡沖地震の記録</h2>
+      </div>
+      <button class="menu-button" onclick="toggleMenu()">使い方</button>
+    </div>
+    
+    <!-- マップ -->
+    <div class="map" id="map"></div>
+    
+    <!-- インフォパネル（ハンバーガーメニュー） -->
+    <div class="info" id="infoSection">
+      <button class="close-button" onclick="toggleMenu()">閉じる</button>
+      <div class="info-content">
+        <div class="sns-icons">
+          <a href="#" target="_blank"><img src="img/xicon.png" alt="X"></a>
+          <a href="#" target="_blank"><img src="img/facebookicon.png" alt="Facebook"></a>
+          <a href="#" target="_blank"><img src="img/LINEicon.png" alt="LINE"></a>
+        </div>
+        <p style="font-size: 1.2em;">福岡、佐賀、長崎県内で起きた交通事故の発生地点を確認できます。マーカーをクリックすると、事故の概要が画面中央に表示されます。</p>
+        <p style="font-size: 1.2em;">「サーチ」ボタンに施設名や店舗名を入力すると、そのエリアに移動することができます。</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 中央ポップアップオーバーレイ（CSVマーカー用） -->
+  <div id="centerPopupOverlay">
+    <div id="centerPopup">
+      <button id="closePopup">&times;</button>
+      <div id="popupContent"></div>
+    </div>
+  </div>
+  
+  <script>
+    // ハンバーガーメニューの制御
+    function toggleMenu() {
+      const infoSection = document.getElementById('infoSection');
+      infoSection.classList.toggle('open');
+    }
+    
+    // Mapbox のアクセストークン
+    mapboxgl.accessToken = 'pk.eyJ1Ijoibm5wZGF0YSIsImEiOiJjbHBnbTV6cXIwd2p2MmlwYWxnYWg1bnh3In0.vDZxaboMvN72PFLaztqqnA';
+    
+    // 画面サイズに応じたマップ設定（例）
+    function isMobileDevice() {
+      return window.innerWidth <= 800;
+    }
+    const mobileSettings = { center: [130.486, 33.523], zoom: 7.5 };
+    const desktopSettings = { center: [130.486, 33.523], zoom: 8.75 };
+    const settings = isMobileDevice() ? mobileSettings : desktopSettings;
+    
+    // マップの初期設定
+    const map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/nnpdata/cm7ok5z5k002a01sk8ple0w9t',
+      center: settings.center,
+      zoom: settings.zoom
+    });
+    
+    // ナビゲーション、フルスクリーン、スケールコントロールを追加
+    map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+    map.addControl(new mapboxgl.FullscreenControl(), 'top-right');
+    map.addControl(new mapboxgl.ScaleControl({ maxWidth: 200, unit: 'metric' }), 'top-right');
+    
+    // 中央ポップアップ（CSVマーカー用）の表示・非表示を制御する関数
+    function openCenterPopup(contentHTML) {
+      document.getElementById('popupContent').innerHTML = contentHTML;
+      document.getElementById('centerPopupOverlay').style.display = 'flex';
+    }
+    function closeCenterPopup() {
+      document.getElementById('centerPopupOverlay').style.display = 'none';
+    }
+    document.getElementById('closePopup').addEventListener('click', closeCenterPopup);
+    
+    // Google スプレッドシートの CSV URL（公開設定済みの URL に置き換えてください）
+    const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTZTPZ6TLFNzoF_rn7gexlPtXWU2AnaqV1s3h2PF0SkKjpscjnE57z1X7dbKyFNICTZ10QAXYK1tNhM/pub?output=csv';
+    
+    // CSV データを取得してパース（PapaParseを使用）
+    Papa.parse(csvUrl, {
+      download: true,
+      header: true,
+      complete: function(results) {
+        console.log("CSV Data:", results.data);
+        results.data.forEach(function(row) {
+          // CSV のカラム名は「経度」「緯度」「タイトル」「説明」「画像」と仮定
+          const lng = parseFloat(row["経度"]);
+          const lat = parseFloat(row["緯度"]);
+          if (!lng || !lat) return; // 座標が無い行はスキップ
+          
+          const title = row["引用元"] || "No Title";
+          const description = row["絵解き文"] || "No Description";
+          const image = row["元写真"] || "";
+          
+          // カスタムマーカー（黒縁の赤丸）を作成
+          const el = document.createElement('div');
+          el.className = 'custom-marker';
+          
+          // マーカーを地図に追加し、クリックで中央ポップアップを表示
+          new mapboxgl.Marker(el)
+            .setLngLat([lng, lat])
+            .addTo(map)
+            .getElement().addEventListener('click', function(e) {
+              const contentHTML = `
+                <h3 style="margin-bottom: 10px; font-size: 22px;">${title}</h3>
+                <p style="margin-bottom: 10px; font-size: 18px;">${description}</p>
+                <img src="${image}" alt="Image">
+              `;
+              openCenterPopup(contentHTML);
+            });
+        });
+      }
+    });
+    
+    // Mapbox Search ボックスの初期化
+    document.getElementById('search-js').onload = function () {
+      const searchBox = new MapboxSearchBox();
+      searchBox.accessToken = mapboxgl.accessToken;
+      searchBox.options = {
+        types: 'address,poi',
+        proximity: [130.39882, 33.59167],
+        language: 'ja',
+        country: 'JP'
+      };
+      searchBox.marker = true;
+      searchBox.mapboxgl = mapboxgl;
+      map.addControl(searchBox, 'top-left');
+    };
+    
+    // マップの高さをヘッダー分調整する関数
+    function adjustMapHeight() {
+      const header = document.querySelector('.header');
+      const mapElement = document.querySelector('.map');
+      const headerHeight = header.offsetHeight;
+      const viewportHeight = window.innerHeight;
+      mapElement.style.height = `${viewportHeight - headerHeight}px`;
+    }
+    adjustMapHeight();
+    window.addEventListener('resize', adjustMapHeight);
+  </script>
+</body>
+</html>

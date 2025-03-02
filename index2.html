@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mapbox Tileset + 中央ポップアップ</title>
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet">
+  <style>
+    body { margin: 0; padding: 0; }
+    #map { width: 100vw; height: 100vh; }
+    /* 中央ポップアップのオーバーレイ */
+    #centerPopupOverlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.6);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+    /* ポップアップ本体 */
+    #centerPopup {
+      background: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      max-width: 600px;
+      width: 90%;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      position: relative;
+    }
+    /* 閉じるボタン */
+    #closePopup {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      border: none;
+      background: transparent;
+      font-size: 24px;
+      cursor: pointer;
+    }
+    /* ポップアップ内の画像 */
+    #centerPopup img {
+      width: 100%;
+      max-width: 600px;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+    /* メディアクエリ（スマホ用） */
+    @media (max-width: 768px) {
+      #centerPopup {
+        width: 90%;
+        padding: 15px;
+      }
+      #centerPopup h3 {
+        font-size: 20px;
+      }
+      #centerPopup p {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<!-- 中央ポップアップのオーバーレイ -->
+<div id="centerPopupOverlay">
+  <div id="centerPopup">
+    <button id="closePopup">&times;</button>
+    <div id="popupContent">
+      <!-- ここにポップアップの内容を挿入 -->
+    </div>
+  </div>
+</div>
+
+<script>
+  // Mapbox のアクセストークンを設定
+  mapboxgl.accessToken = 'pk.eyJ1Ijoibm5wZGF0YSIsImEiOiJjbHBnbTV6cXIwd2p2MmlwYWxnYWg1bnh3In0.vDZxaboMvN72PFLaztqqnA';
+
+  // 地図の初期設定
+  const map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/nnpdata/cm7ok5z5k002a01sk8ple0w9t',
+      center: [130.05, 33.18],
+      zoom: 10
+  });
+
+  // ナビゲーションとフルスクリーンコントロールを追加
+  map.addControl(new mapboxgl.NavigationControl());
+  map.addControl(new mapboxgl.FullscreenControl());
+
+  // 中央ポップアップオーバーレイの表示・非表示を制御する関数
+  function openCenterPopup(contentHTML) {
+      document.getElementById('popupContent').innerHTML = contentHTML;
+      document.getElementById('centerPopupOverlay').style.display = 'flex';
+  }
+  function closeCenterPopup() {
+      document.getElementById('centerPopupOverlay').style.display = 'none';
+  }
+
+  // 閉じるボタンのイベント設定
+  document.getElementById('closePopup').addEventListener('click', closeCenterPopup);
+
+  map.on('load', function () {
+      // Tileset を vector ソースとして追加
+      map.addSource('custom-tileset', {
+          type: 'vector',
+          url: 'mapbox://nnpdata.19fvsrih'
+      });
+
+      // Tileset の source-layer 名を確認して、正しい名前に置換してください
+      map.addLayer({
+          id: 'tileset-layer',
+          type: 'circle',
+          source: 'custom-tileset',
+          'source-layer': 'map_data-dw12zf', // ←正しいレイヤー名に変更
+          paint: {
+              'circle-radius': 8,
+              'circle-color': '#ff0000'
+          }
+      });
+
+      // マーカーをクリックすると中央ポップアップを表示
+      map.on('click', 'tileset-layer', function (e) {
+          const feature = e.features[0];
+          const properties = feature.properties;
+
+          // ポップアップ内容の HTML（タイトル、説明、画像）
+          const contentHTML = `
+              <h3 style="margin-bottom: 10px; font-size: 22px;">${properties.title || 'No Title'}</h3>
+              <p style="margin-bottom: 10px; font-size: 18px;">${properties.description || 'No Description'}</p>
+              <img src="${properties.image || ''}" alt="Image">
+          `;
+
+          // 中央ポップアップを開く
+          openCenterPopup(contentHTML);
+      });
+
+      // カーソルをポインターに変更
+      map.on('mouseenter', 'tileset-layer', function () {
+          map.getCanvas().style.cursor = 'pointer';
+      });
+      map.on('mouseleave', 'tileset-layer', function () {
+          map.getCanvas().style.cursor = '';
+      });
+  });
+</script>
+
+</body>
+</html>

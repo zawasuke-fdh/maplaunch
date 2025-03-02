@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excelデータからマップ作成</title>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet">
+    <style>
+        body { margin: 0; padding: 0; }
+        #map { width: 100vw; height: 100vh; }
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script>
+    mapboxgl.accessToken = 'pk.eyJ1Ijoibm5wZGF0YSIsImEiOiJjbHBnbTV6cXIwd2p2MmlwYWxnYWg1bnh3In0.vDZxaboMvN72PFLaztqqnA';
+
+    const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [130.05, 33.18], // 初期位置（佐賀県武雄市周辺）
+        zoom: 10
+    });
+
+    // GeoJSON データをロード
+    fetch('http://localhost:8000/map_data.geojson') // ★ 必ず正しいURLを指定
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            data.features.forEach(spot => {
+                const { coordinates } = spot.geometry;
+                const { title, description, image, popup } = spot.properties;
+
+                // カスタムアイコン
+                const el = document.createElement('div');
+                el.style.backgroundImage = 'url(http://localhost:8000/icon.png)';
+                el.style.width = '32px';
+                el.style.height = '32px';
+                el.style.backgroundSize = 'cover';
+                el.style.cursor = 'pointer';
+
+                // マーカー追加
+                const marker = new mapboxgl.Marker(el)
+                    .setLngLat(coordinates)
+                    .addTo(map);
+
+                // ポップアップ設定（フルスクリーン機能なし & 画像サイズ拡大）
+                const popupContent = `
+                <h3>${title}</h3>
+                <p>${description}</p>
+                <img src="${image}" style="width:100%; max-width:600px;">
+                `;
+
+                // ポップアップ作成
+                const mapPopup = new mapboxgl.Popup({ offset: 25 })
+                .setHTML(popupContent);
+
+                // マーカーにポップアップをセット
+                marker.setPopup(mapPopup);
+
+
+            });
+        })
+        .catch(error => {
+            console.error('GeoJSONの読み込みエラー:', error);
+        });
+</script>
+
+</body>
+</html>

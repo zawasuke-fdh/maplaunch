@@ -1,0 +1,549 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    130.0492373,
+                    33.1858307
+                ]
+            },
+            "properties": {
+                "title": "糸山武雄①",
+                "description": "2021年8月14日、佐賀県武雄市橘町片白周辺",
+                "image": "https://public.flourish.studio/uploads/273137/7a164346-d3de-430d-9ebd-bb11ac69015b.jpg",
+                "popup": "<img src = \"https://public.flourish.studio/uploads/273137/7a164346-d3de-430d-9ebd-bb11ac69015b.jpg\" width=\"80%\">"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    130.0492496,
+                    33.1862893
+                ]
+            },
+            "properties": {
+                "title": "糸山武雄①",
+                "description": "2021年8月14日、佐賀県武雄市橘町片白周辺",
+                "image": "https://public.flourish.studio/uploads/273137/f8b46a8f-f4dd-4c76-b2dd-c957f1dc0ebb.jpg",
+                "popup": "<img src = \"https://public.flourish.studio/uploads/273137/f8b46a8f-f4dd-4c76-b2dd-c957f1dc0ebb.jpg\" width=\"80%\">"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    130.0420716,
+                    33.21281831
+                ]
+            },
+            "properties": {
+                "title": "糸山武雄②",
+                "description": "2021年8月14日、佐賀県武雄市朝日町周辺",
+                "image": "https://public.flourish.studio/uploads/273137/c0f2e0e1-e796-4ee0-a24a-b7561ec01e7a.jpg",
+                "popup": "<img src = \"https://public.flourish.studio/uploads/273137/c0f2e0e1-e796-4ee0-a24a-b7561ec01e7a.jpg\" width=\"80%\">"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    130.0334523,
+                    33.2049907
+                ]
+            },
+            "properties": {
+                "title": "糸山武雄②",
+                "description": "2021年8月14日、佐賀県武雄市朝日町甘久メリーランド武雄",
+                "image": "https://public.flourish.studio/uploads/273137/70089a83-7b2f-4183-adc3-aa240c457987.jpg",
+                "popup": "<img src = \"https://public.flourish.studio/uploads/273137/70089a83-7b2f-4183-adc3-aa240c457987.jpg\" width=\"80%\">"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    130.0162149,
+                    33.1686641
+                ]
+            },
+            "properties": {
+                "title": "糸山武雄３",
+                "description": "2021年8月14日、佐賀県武雄市東川登町永野周辺",
+                "image": "https://public.flourish.studio/uploads/273137/f452023f-bf7f-48e5-9b74-a18767c8cf13.jpg",
+                "popup": "<img src = \"https://public.flourish.studio/uploads/273137/f452023f-bf7f-48e5-9b74-a18767c8cf13.jpg\" width=\"80%\">"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    130.0147035,
+                    33.1965057
+                ]
+            },
+            "properties": {
+                "title": "糸山武雄３",
+                "description": "2021年8月15日、佐賀県武雄市武雄温泉駐車場",
+                "image": "https://public.flourish.studio/uploads/273137/c15a945f-b482-4e65-ab52-a68608bbb106.jpg",
+                "popup": "<img src = \"https://public.flourish.studio/uploads/273137/c15a945f-b482-4e65-ab52-a68608bbb106.jpg\" width=\"80%\">"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    130.053725,
+                    33.1963855
+                ]
+            },
+            "properties": {
+                "title": "糸山武雄４",
+                "description": "2021年8月15日、佐賀県武雄市橘町片白周辺",
+                "image": "https://public.flourish.studio/uploads/273137/cc32bc2f-6762-48ea-a1a2-5f2f1466bf35.jpg",
+                "popup": "<img src = \" https://public.flourish.studio/uploads/273137/cc32bc2f-6762-48ea-a1a2-5f2f1466bf35.jpg\" width=\"80%\">"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    130.07825,
+                    33.217416
+                ]
+            },
+            "properties": {
+                "title": "糸山武雄４",
+                "description": "2021年8月15日、佐賀県武雄市北方町志久周辺",
+                "image": "https://public.flourish.studio/uploads/273137/91887287-0776-434d-a7eb-44974651c4c6.jpg",
+                "popup": "<img src = \"https://public.flourish.studio/uploads/273137/91887287-0776-434d-a7eb-44974651c4c6.jpg\" width=\"80%\">"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    130.0693442,
+                    33.2211605
+                ]
+            },
+            "properties": {
+                "title": "糸山武雄５",
+                "description": "2021年8月21日、佐賀県武雄市北方町志久周辺",
+                "image": "https://public.flourish.studio/uploads/273137/6713e58c-ddd6-47f0-b39e-785828225deb.jpg",
+                "popup": "<img src = \"https://public.flourish.studio/uploads/273137/6713e58c-ddd6-47f0-b39e-785828225deb.jpg\" width=\"80%\">"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    130.0823174,
+                    33.216255
+                ]
+            },
+            "properties": {
+                "title": "糸山武雄５",
+                "description": "2021年8月25日、佐賀県武雄市北方町のJR佐世保線北方駅",
+                "image": "https://public.flourish.studio/uploads/273137/5f8fc7c5-a9ff-4946-a0d4-2d53061aa6ad.jpg",
+                "popup": "<img src = \"https://public.flourish.studio/uploads/273137/5f8fc7c5-a9ff-4946-a0d4-2d53061aa6ad.jpg\" width=\"80%\">"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    130.091841,
+                    33.42326389
+                ]
+            },
+            "properties": {
+                "title": "米村・佐賀・災害写真",
+                "description": "土砂崩れで濁流が流れる川＝2023年7月10日、唐津市浜玉町",
+                "image": "https://public.flourish.studio/uploads/273137/42350e4c-bf0b-4953-b5f3-aa812e2f9ac8.jpg",
+                "popup": "<img src = \"https://public.flourish.studio/uploads/273137/42350e4c-bf0b-4953-b5f3-aa812e2f9ac8.jpg\" width=\"80%\">"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    130.091489,
+                    33.423911
+                ]
+            },
+            "properties": {
+                "title": "米村・佐賀唐津大雨",
+                "description": "土砂が流入した広場を整地する地元住民＝2023年7月11日、佐賀県唐津市浜玉町平原",
+                "image": "https://public.flourish.studio/uploads/273137/42fe584b-5c3c-4bbd-99e4-3d0a8e00094b.jpg",
+                "popup": "<img src = \"https://public.flourish.studio/uploads/273137/42fe584b-5c3c-4bbd-99e4-3d0a8e00094b.jpg\" width=\"80%\">"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    130.079523,
+                    33.424478
+                ]
+            },
+            "properties": {
+                "title": "米村・佐賀唐津大雨",
+                "description": "園庭や園舎に土砂が流入した平原保育園＝2023年7月16日、佐賀県唐津市浜玉町平原",
+                "image": "https://public.flourish.studio/uploads/273137/0a425c6d-0c16-4b7c-8d32-05d2e0259fe6.jpg",
+                "popup": "<img src = \"https://public.flourish.studio/uploads/273137/0a425c6d-0c16-4b7c-8d32-05d2e0259fe6.jpg\" width=\"80%\">"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    130.0926824,
+                    33.42168
+                ]
+            },
+            "properties": {
+                "title": "米村・佐賀唐津大雨",
+                "description": "土砂や水で押しつぶされた武雄神社＝2023年7月14日、佐賀県唐津市浜玉町平原",
+                "image": "https://public.flourish.studio/uploads/273137/7fbf6166-f6c4-47bf-814c-cb17bfed152d.jpg",
+                "popup": "<img src = \"https://public.flourish.studio/uploads/273137/7fbf6166-f6c4-47bf-814c-cb17bfed152d.jpg\" width=\"80%\">"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    130.301196,
+                    33.250556
+                ]
+            },
+            "properties": {
+                "title": "米村・２１年佐賀大雨",
+                "description": "増水した松原川＝2021年8月11日、佐賀市松原２丁目",
+                "image": "https://public.flourish.studio/uploads/273137/76efa56f-418e-4b17-8206-50296c87b39d.jpg",
+                "popup": "<img src = \"https://public.flourish.studio/uploads/273137/76efa56f-418e-4b17-8206-50296c87b39d.jpg\" width=\"80%\">"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    130.2969576,
+                    33.2638734
+                ]
+            },
+            "properties": {
+                "title": "米村・２１年佐賀大雨",
+                "description": "交通の乱れを伝えるＪＲ佐賀駅の掲示＝2021年8月12日、佐賀市駅前中央",
+                "image": "https://public.flourish.studio/uploads/273137/09bbf26b-d170-48ea-a1ad-c69f4c170e10.jpg",
+                "popup": "<img src = \"https://public.flourish.studio/uploads/273137/09bbf26b-d170-48ea-a1ad-c69f4c170e10.jpg\" width=\"80%\">"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    130.304128,
+                    33.251956
+                ]
+            },
+            "properties": {
+                "title": "米村・２１年佐賀大雨",
+                "description": "冠水し通行止めになった道路＝2021年8月13日、佐賀市松原３丁目",
+                "image": "https://public.flourish.studio/uploads/273137/dca88e5b-dcf2-45b8-a061-309035bed3ef.jpg",
+                "popup": "<img src = \"https://public.flourish.studio/uploads/273137/dca88e5b-dcf2-45b8-a061-309035bed3ef.jpg\" width=\"80%\">"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    130.300072,
+                    33.252383
+                ]
+            },
+            "properties": {
+                "title": "米村・２１年佐賀大雨",
+                "description": "水しぶきを上げて走る乗用車＝2021年8月13日、佐賀市の中央大通り",
+                "image": "https://public.flourish.studio/uploads/273137/217ebfbd-d511-49b1-9895-2824ac1987b7.jpg",
+                "popup": "<img src = \"https://public.flourish.studio/uploads/273137/217ebfbd-d511-49b1-9895-2824ac1987b7.jpg\" width=\"80%\">"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    130.30615,
+                    33.251492
+                ]
+            },
+            "properties": {
+                "title": "米村・２１年佐賀大雨",
+                "description": "路上で水没した乗用車＝2021年8月14日、佐賀市松原４丁目",
+                "image": "https://public.flourish.studio/uploads/273137/8871a456-ba0f-42fb-95b5-4320b4022af2.jpg",
+                "popup": "<img src = \"https://public.flourish.studio/uploads/273137/8871a456-ba0f-42fb-95b5-4320b4022af2.jpg\" width=\"80%\">"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    130.299262,
+                    33.251827
+                ]
+            },
+            "properties": {
+                "title": "米村・２１年佐賀大雨",
+                "description": "路上で水没した乗用車＝2021年8月14日、佐賀市松原１丁目",
+                "image": "https://public.flourish.studio/uploads/273137/7be20731-f157-4bfe-bcf8-3e33b9bcca7c.jpg",
+                "popup": "<img src = \"https://public.flourish.studio/uploads/273137/7be20731-f157-4bfe-bcf8-3e33b9bcca7c.jpg\" width=\"80%\">"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    130.2964449,
+                    33.2539953
+                ]
+            },
+            "properties": {
+                "title": "中野チームス",
+                "description": "増水した道路＝2023年7月3日、佐賀市",
+                "image": "https://public.flourish.studio/uploads/273137/fa139d11-5481-481d-b459-42463172f47e.jpg",
+                "popup": "<img src = \"https://public.flourish.studio/uploads/273137/fa139d11-5481-481d-b459-42463172f47e.jpg\" width=\"80%\">"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    130.304002,
+                    33.252037
+                ]
+            },
+            "properties": {
+                "title": "中野チームス",
+                "description": "増水した道路で小魚を取るサギ＝2023年7月3日、佐賀市松原",
+                "image": "https://public.flourish.studio/uploads/273137/9f825f09-f227-48a8-ab47-ffe50edc60c6.jpg",
+                "popup": "<img src = \"https://public.flourish.studio/uploads/273137/9f825f09-f227-48a8-ab47-ffe50edc60c6.jpg\" width=\"80%\">"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    130.303669,
+                    33.252457
+                ]
+            },
+            "properties": {
+                "title": "中野チームス",
+                "description": "増水した川を見やるカッパのこども＝2023年7月3日、佐賀市松原",
+                "image": "https://public.flourish.studio/uploads/273137/d40891ed-8e52-4c9f-af3c-9938ee81a884.jpg",
+                "popup": "<img src = \"https://public.flourish.studio/uploads/273137/d40891ed-8e52-4c9f-af3c-9938ee81a884.jpg\" width=\"80%\">"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    130.297493,
+                    33.263868
+                ]
+            },
+            "properties": {
+                "title": "中野チームス",
+                "description": "冠水した佐賀駅前＝2023年7月3日、佐賀市駅前中央",
+                "image": "https://public.flourish.studio/uploads/273137/39043a49-115b-4de2-bbba-881dec1fcbbe.jpg",
+                "popup": "<img src = \"https://public.flourish.studio/uploads/273137/39043a49-115b-4de2-bbba-881dec1fcbbe.jpg\" width=\"80%\">"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    129.9265601,
+                    33.3382714
+                ]
+            },
+            "properties": {
+                "title": "佐賀災害写真（伊万里）",
+                "description": "2023年7月10日、佐賀県伊万里市南波多町水留清水橋付近",
+                "image": "https://public.flourish.studio/uploads/273137/9131b278-492a-4a22-92ce-b58e7d95c151.jpg",
+                "popup": "<img src = \"https://public.flourish.studio/uploads/273137/9131b278-492a-4a22-92ce-b58e7d95c151.jpg\" width=\"80%\" >"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    129.92751,
+                    33.338679
+                ]
+            },
+            "properties": {
+                "title": "佐賀災害写真（伊万里）",
+                "description": "2023年7月10日、佐賀県伊万里市南波多町水留清水橋付近",
+                "image": "https://public.flourish.studio/uploads/273137/68c33e7d-ecad-44e1-8755-43c73d85b413.jpg",
+                "popup": "<img src = \"https://public.flourish.studio/uploads/273137/68c33e7d-ecad-44e1-8755-43c73d85b413.jpg\" width=\"80%\">"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    130.098895,
+                    33.208873
+                ]
+            },
+            "properties": {
+                "title": "大町1面",
+                "description": "2019年8月28日、佐賀県大町町",
+                "image": "https://public.flourish.studio/uploads/273137/9ac5d58b-d8db-4053-819c-e8c64b1623fa.jpg",
+                "popup": "<img src = \"https://public.flourish.studio/uploads/273137/9ac5d58b-d8db-4053-819c-e8c64b1623fa.jpg\" width=\"80%\">"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    130.0483709,
+                    33.21373676
+                ]
+            },
+            "properties": {
+                "title": "武雄",
+                "description": "ゴムボートに乗せられ、自衛隊に救助される人たち＝2019年8月28日、佐賀県武雄市朝日町",
+                "image": "https://public.flourish.studio/uploads/273137/d488a7f3-b10e-4007-a7b1-53cfe11f02c2.jpg",
+                "popup": "<img src = \"https://public.flourish.studio/uploads/273137/d488a7f3-b10e-4007-a7b1-53cfe11f02c2.jpg\" width=\"80%\">"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    130.0352436,
+                    33.1999648
+                ]
+            },
+            "properties": {
+                "title": "武雄２",
+                "description": "水に漬かった駐車場＝2019年8月28日、佐賀県武雄武雄町富岡",
+                "image": "https://public.flourish.studio/uploads/273137/9f966189-1753-4893-a02c-3791abecf38b.jpg",
+                "popup": "<img src = \"https://public.flourish.studio/uploads/273137/9f966189-1753-4893-a02c-3791abecf38b.jpg\" width=\"80%\">"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    130.515079,
+                    33.3538962
+                ]
+            },
+            "properties": {
+                "title": "鳥栖",
+                "description": "冠水で通行止めになった道路＝2020年6月27日、佐賀県鳥栖市真木町",
+                "image": "https://public.flourish.studio/uploads/273137/1547b04e-1b44-42e1-8a5e-838243f961c4.jpg",
+                "popup": "<img src = \"https://public.flourish.studio/uploads/273137/1547b04e-1b44-42e1-8a5e-838243f961c4.jpg\""
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    130.6587222,
+                    33.3221944
+                ]
+            },
+            "properties": {
+                "title": "竹次さん",
+                "description": "豪雨から1年で復旧が進む福岡県久留米市田主丸町竹野地区＝2024年6月と2023年7月の写真を交互に表示",
+                "image": "https://public.flourish.studio/uploads/273137/494fd365-8bd7-4e0b-ab35-5b97fa98e724.jpg",
+                "popup": "<img src = \"https://public.flourish.studio/uploads/273137/3f208116-0c1b-4846-b3c7-d61e845dfbe1.gif\" width=\"80%\">"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    130.649719,
+                    33.336855
+                ]
+            },
+            "properties": {
+                "title": "金田",
+                "description": "冠水した住宅地や田畑＝2023年7月10日、福岡県久留米市田主丸町",
+                "image": "https://public.flourish.studio/uploads/273137/746be79d-ea9f-4c72-8a29-801d03277331.jpg",
+                "popup": "<img src = \"https://public.flourish.studio/uploads/273137/746be79d-ea9f-4c72-8a29-801d03277331.jpg\""
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    130.635454274399,
+                    33.3385643617591
+                ]
+            },
+            "properties": {
+                "title": "木村",
+                "description": "浸水した大橋小で片付けをする教職員ら＝2023年7月12日、福岡県久留米市大橋町",
+                "image": "https://public.flourish.studio/uploads/273137/3de3d78f-15ef-430e-a766-acda49fb0f16.jpg",
+                "popup": "<img src = \"https://public.flourish.studio/uploads/273137/3de3d78f-15ef-430e-a766-acda49fb0f16.jpg\""
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    130.661995,
+                    33.322569
+                ]
+            },
+            "properties": {
+                "title": "木村２",
+                "description": "全面通行止めとなった道路＝2023年7月12日、久留米市田主丸町竹野地区",
+                "image": "https://public.flourish.studio/uploads/273137/be71ecdc-a232-41bd-a87f-63dc828d25ba.jpg",
+                "popup": "<img src = \"https://public.flourish.studio/uploads/273137/be71ecdc-a232-41bd-a87f-63dc828d25ba.jpg\""
+            }
+        }
+    ]
+}
