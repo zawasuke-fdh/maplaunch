@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>交通事故マップ</title>
+
+  <!-- Mapbox GL JS -->
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
+
+  <!-- PapaParse: CSV パースライブラリ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .map {
+      width: 100vw;
+      height: 100vh;
+    }
+
+    .custom-marker {
+      background-color: red;
+      border: 2px solid black;
+      border-radius: 50%;
+      width: 10px;
+      height: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="map" id="map"></div>
+
+  <script>
+    // Mapbox のアクセストークン
+    mapboxgl.accessToken = 'pk.eyJ1Ijoibm5wZGF0YSIsImEiOiJjbHBnbTV6cXIwd2p2MmlwYWxnYWg1bnh3In0.vDZxaboMvN72PFLaztqqnA';
+
+    const map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/nnpdata/cm7ok5z5k002a01sk8ple0w9t',
+      center: [130.486, 33.523],
+      zoom: 8.75
+    });
+
+    map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+    map.addControl(new mapboxgl.FullscreenControl(), 'top-right');
+    map.addControl(new mapboxgl.ScaleControl({ maxWidth: 200, unit: 'metric' }), 'top-right');
+
+    const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTZTPZ6TLFNzoF_rn7gexlPtXWU2AnaqV1s3h2PF0SkKjpscjnE57z1X7dbKyFNICTZ10QAXYK1tNhM/pub?output=csv';
+
+    Papa.parse(csvUrl, {
+      download: true,
+      header: true,
+      complete: function(results) {
+        results.data.forEach(function(row) {
+          const lng = parseFloat(row["経度"]);
+          const lat = parseFloat(row["緯度"]);
+          if (!lng || !lat) return;
+
+          const el = document.createElement('div');
+          el.className = 'custom-marker';
+
+          new mapboxgl.Marker(el)
+            .setLngLat([lng, lat])
+            .addTo(map)
+            .getElement().addEventListener('click', function() {
+              alert(`タイトル: ${row["引用元"] || "No Title"}\n説明: ${row["絵解き文"] || "No Description"}`);
+            });
+        });
+      }
+    });
+  </script>
+</body>
+</html>

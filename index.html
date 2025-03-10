@@ -330,6 +330,7 @@
       const searchBox = new MapboxSearchBox();
       searchBox.accessToken = mapboxgl.accessToken;
       searchBox.options = {
+        placeholder: '施設名や店舗名を検索', // 「サーチ」→「施設名や店舗名を検索」に変更
         types: 'address,poi',
         proximity: [130.39882, 33.59167],
         language: 'ja',
