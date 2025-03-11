@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="交通事故マップの説明文">
+  <meta property="og:title" content="交通事故マップ">
+  <meta property="og:site_name" content="交通事故マップ">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ja-JP">
+  <meta property="og:image" content="https://specials.nishinippon.co.jp/school_rules/img/ogp.png">
+  <meta property="og:description" content="交通事故マップの説明文">
+  <title>交通事故マップ</title>
+  
+  <!-- Mapbox GL JS (バージョンは必要に応じて統一) -->
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
+  
+  <!-- Mapbox Search JS -->
+  <script id="search-js" defer src="https://api.mapbox.com/search-js/v1.0.0-beta.22/web.js"></script>
+  
+  <!-- PapaParse: CSV パースライブラリ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+  
+  <style>
+    /* 全体の設定 */
+    body {
+      margin: 0;
+      font-family: "Noto Sans JP", Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    /* マーカー用カスタムアイコン：黒縁の赤丸 */
+    .custom-marker {
+      background-color: red;
+      border: 2px solid black;
+      border-radius: 50%;
+      width: 10px;
+      height: 10px;
+      cursor: pointer;
+    }
+    
+    
+  </style>
+</head>
+<body>
+      <!-- マップ -->
+    <div class="map" id="map"></div>
+   
+  <script>
+
+    
+    // Mapbox のアクセストークン
+    mapboxgl.accessToken = 'pk.eyJ1Ijoibm5wZGF0YSIsImEiOiJjbHBnbTV6cXIwd2p2MmlwYWxnYWg1bnh3In0.vDZxaboMvN72PFLaztqqnA';
+    
+    // 画面サイズに応じたマップ設定（例）
+    function isMobileDevice() {
+      return window.innerWidth <= 800;
+    }
+    const mobileSettings = { center: [130.486, 33.523], zoom: 7.5 };
+    const desktopSettings = { center: [130.486, 33.523], zoom: 8.75 };
+    const settings = isMobileDevice() ? mobileSettings : desktopSettings;
+    
+    // マップの初期設定
+    const map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/nnpdata/cm7ok5z5k002a01sk8ple0w9t',
+      center: settings.center,
+      zoom: settings.zoom
+    });
+    
+    // ナビゲーション、フルスクリーン、スケールコントロールを追加
+    map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+    map.addControl(new mapboxgl.FullscreenControl(), 'top-right');
+    map.addControl(new mapboxgl.ScaleControl({ maxWidth: 200, unit: 'metric' }), 'top-right');
+    
+    // 中央ポップアップ（CSVマーカー用）の表示・非表示を制御する関数
+    function openCenterPopup(contentHTML) {
+      document.getElementById('popupContent').innerHTML = contentHTML;
+      document.getElementById('centerPopupOverlay').style.display = 'flex';
+    }
+    function closeCenterPopup() {
+      document.getElementById('centerPopupOverlay').style.display = 'none';
+    }
+    document.getElementById('closePopup').addEventListener('click', closeCenterPopup);
+    
+    // Google スプレッドシートの CSV URL（公開設定済みの URL に置き換えてください）
+    const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTZTPZ6TLFNzoF_rn7gexlPtXWU2AnaqV1s3h2PF0SkKjpscjnE57z1X7dbKyFNICTZ10QAXYK1tNhM/pub?output=csv';
+    
+    // CSV データを取得してパース（PapaParseを使用）
+    Papa.parse(csvUrl, {
+      download: true,
+      header: true,
+      complete: function(results) {
+        console.log("CSV Data:", results.data);
+        results.data.forEach(function(row) {
+          // CSV のカラム名は「経度」「緯度」「タイトル」「説明」「画像」と仮定
+          const lng = parseFloat(row["経度"]);
+          const lat = parseFloat(row["緯度"]);
+          if (!lng || !lat) return; // 座標が無い行はスキップ
+          
+          const title = row["引用元"] || "No Title";
+          const description = row["絵解き文"] || "No Description";
+          const image = row["元写真"] || "";
+          
+          // カスタムマーカー（黒縁の赤丸）を作成
+          const el = document.createElement('div');
+          el.className = 'custom-marker';
+          
+          // マーカーを地図に追加し、クリックで中央ポップアップを表示
+          new mapboxgl.Marker(el)
+            .setLngLat([lng, lat])
+            .addTo(map)
+            .getElement().addEventListener('click', function(e) {
+              const contentHTML = `
+                <h3 style="margin-bottom: 10px; font-size: 22px;">${title}</h3>
+                <p style="margin-bottom: 10px; font-size: 18px;">${description}</p>
+                <img src="${image}" alt="Image">
+              `;
+              openCenterPopup(contentHTML);
+            });
+        });
+      }
+    });
+    
+    // Mapbox Search ボックスの初期化
+    document.getElementById('search-js').onload = function () {
+      const searchBox = new MapboxSearchBox();
+      searchBox.accessToken = mapboxgl.accessToken;
+      searchBox.options = {
+        types: 'address,poi',
+        proximity: [130.39882, 33.59167],
+        language: 'ja',
+        country: 'JP'
+      };
+      searchBox.marker = true;
+      searchBox.mapboxgl = mapboxgl;
+      map.addControl(searchBox, 'top-left');
+    };
+    
+  </script>
+</body>
+</html>
